@@ -564,6 +564,12 @@ void state::process_dir(const tstring &fn)
  */
 bool state::should_hash_symlink(const tstring &fn, file_types *link_type)
 {
+    if (mode_symlinks_ignore) {
+        if (opt_debug) 
+            ocb.status("*** state::should_hash_symlink(%s) ignored because of mode_symlinks_ignore",global::make_utf8(fn).c_str());
+        return false;
+    }
+    
     /**
      * We must look at what this symlink points to before we process it.
      * The file_type() function uses lstat to examine the file.

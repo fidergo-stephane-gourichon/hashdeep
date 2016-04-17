@@ -793,6 +793,7 @@ class state {
 public:;
 
  state():mode_recursive(false),	// do we recurse?
+      mode_symlinks_ignore(false),	// do we just ignore symlinks?
       mode_warn_only(false),	// for loading hash files
       
       // these determine which files get hashed
@@ -819,6 +820,7 @@ public:;
 	{};
 
     bool	mode_recursive;
+    bool	mode_symlinks_ignore;
     bool	mode_warn_only;
 
     // which files do we hash.

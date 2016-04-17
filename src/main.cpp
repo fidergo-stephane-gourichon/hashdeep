@@ -144,6 +144,7 @@ void state::hashdeep_usage()
 
     ocb.status("-p <size> - piecewise mode. Files are broken into blocks for hashing");
     ocb.status("-r        - recursive mode. All subdirectories are traversed");
+    ocb.status("-L        - no-symlink mode. All symbolic links are ignored instead of dereferences");
     ocb.status("-d        - output in DFXML (Digital Forensics XML)");
     ocb.status("-k <file> - add a file of known hashes");
     ocb.status("-a        - audit mode. Validates FILES against known hashes. Requires -k");
@@ -614,7 +615,7 @@ int state::hashdeep_process_command_line(int argc_, char **argv_)
     bool did_usage = false;
   int i;
 
-  while ((i=getopt(argc_,argv_,"abc:CdeEF:f:o:I:i:MmXxtlk:rsp:wvVhW:0D:uj:")) != -1)  {
+  while ((i=getopt(argc_,argv_,"abc:CdeEF:f:o:I:i:MmXxtlk:rLsp:wvVhW:0D:uj:")) != -1)  {
     switch (i)
     {
     case 'a':
@@ -684,6 +685,7 @@ int state::hashdeep_process_command_line(int argc_, char **argv_)
     case 'l': ocb.opt_relative=true;    break;
     case 'e': ocb.opt_estimate = true;	break;
     case 'r': mode_recursive=true;	break;
+    case 'L': mode_symlinks_ignore=true;	break;
     case 's': ocb.opt_silent = true;	break;
 
 
@@ -1028,7 +1030,7 @@ int state::md5deep_process_command_line(int argc_, char **argv_)
 
     while ((i = getopt(argc_,
 		       argv_,
-		       "A:a:bcCdeF:f:I:i:M:X:x:m:o:tnwzsSp:rhvV0lkqZW:D:uj:")) != -1) {
+		       "A:a:bcCdeF:f:I:i:M:X:x:m:o:tnwzsSp:rLhvV0lkqZW:D:uj:")) != -1) {
 	switch (i) {
 	case 'C': opt_enable_mac_cc = true; break;
 	case 'D': opt_debug = atoi(optarg);	break;
@@ -1109,6 +1111,7 @@ int state::md5deep_process_command_line(int argc_, char **argv_)
 	case 's': ocb.opt_silent = true;	break;
 	case 'e': ocb.opt_estimate = true;	break;
 	case 'r': mode_recursive = true;	break;
+	case 'L': mode_symlinks_ignore = true;	break;
 	case 'k': ocb.opt_asterisk = true;      break;
 	case 'b': ocb.mode_barename=true;	break;
 
